@@ -18,17 +18,17 @@ import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 object PostsApiService {
-    private const val BASE_URL = "http://192.168.0.4:9999/api"
+    private const val BASE_URL = "http://192.168.0.4:9999"
     private val gson = Gson()
 
     suspend fun getPosts(client: OkHttpClient): List<Post> =
-        makeRequest("$BASE_URL/posts", client, object : TypeToken<List<Post>>() {})
+        makeRequest("$BASE_URL/api/posts", client, object : TypeToken<List<Post>>() {})
 
     suspend fun getComments(client: OkHttpClient, id: Long): List<Comment> =
-        makeRequest("$BASE_URL/posts/$id/comments", client, object : TypeToken<List<Comment>>() {})
+        makeRequest("$BASE_URL/api/posts/$id/comments", client, object : TypeToken<List<Comment>>() {})
 
     suspend fun getAuthor(client: OkHttpClient, id: Long): Author =
-        makeRequest("$BASE_URL/authors/$id", client, object : TypeToken<Author>() {})
+        makeRequest("$BASE_URL/api/authors/$id", client, object : TypeToken<Author>() {})
 
     private suspend fun <T> makeRequest(url: String, client: OkHttpClient, typeToken: TypeToken<T>): T =
         withContext(Dispatchers.IO) {
